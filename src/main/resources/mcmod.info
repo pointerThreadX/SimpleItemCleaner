@@ -1,0 +1,15 @@
+[
+  {
+    "modid": "simpleitemcleaner",
+    "name": "SimpleItemCleaner",
+    "description": "Server-side dropped-item cleanup with age protection, item policies and persistent lifecycle tracking for Forge 1.12.2.",
+    "version": "${version}",
+    "mcversion": "1.12.2",
+    "authorList": ["creator01"],
+    "credits": "",
+    "url": "",
+    "updateUrl": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

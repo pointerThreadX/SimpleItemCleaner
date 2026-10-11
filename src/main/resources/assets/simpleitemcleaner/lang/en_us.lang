@@ -1,0 +1,48 @@
+simpleitemcleaner.gui.save=Save
+simpleitemcleaner.gui.local=Local settings - applied next time a world/server starts
+simpleitemcleaner.gui.error=SimpleItemCleaner - configuration error
+simpleitemcleaner.gui.openError=The file was not changed. Fix simpleitemcleaner.cfg manually and reopen Config.
+simpleitemcleaner.gui.saveError=Could not save settings. Correct the value and try again, or cancel. See the log for details.
+simpleitemcleaner.category.general=General
+simpleitemcleaner.category.general.tooltip=Local configuration only. Dedicated/remote servers use their own file on the server. Leave the world before editing; no Minecraft process restart is needed.
+simpleitemcleaner.category.cleanup=Cleanup
+simpleitemcleaner.category.cleanup.tooltip=Cleanup interval, minimum item age and excluded dimensions. Each second represents 20 server ticks.
+simpleitemcleaner.category.warnings=Warnings
+simpleitemcleaner.category.warnings.tooltip=Countdown messages. Values outside the active interval are ignored; duplicate times are sent once.
+simpleitemcleaner.category.results=Results
+simpleitemcleaner.category.results.tooltip=Removal results, including zero. Use {count}, {entities} and {duration} in custom text.
+simpleitemcleaner.category.policies=Policies
+simpleitemcleaner.category.policies.tooltip=PERMANENT items accumulate and can increase memory use and reduce TPS. Precedence: PERMANENT > VANILLA > CONTROLLED.
+simpleitemcleaner.category.logging=Logging
+simpleitemcleaner.category.logging.tooltip=Cleanup and lifecycle statistics. Error and conflict diagnostics remain available.
+simpleitemcleaner.config.general.enabled=Enable
+simpleitemcleaner.config.general.enabled.tooltip=general.enabled: Enable cleanup and expiration protection. When disabled, owned extensions are rolled back when safe. Changes apply on next world/server entry, not to a running session.
+simpleitemcleaner.config.general.intervalSeconds=Cleanup interval
+simpleitemcleaner.config.general.intervalSeconds.tooltip=general.intervalSeconds: 1..86400 seconds (20 ticks per second). The scheduler starts a full interval when entering a world.
+simpleitemcleaner.config.general.minimumAgeSeconds=Minimum age
+simpleitemcleaner.config.general.minimumAgeSeconds.tooltip=general.minimumAgeSeconds: 1..86400 seconds. Younger drops remain protected from cleanup.
+simpleitemcleaner.config.general.excludedDimensions=Excluded dimensions
+simpleitemcleaner.config.general.excludedDimensions.tooltip=general.excludedDimensions: Signed integer IDs, e.g. -1 (Nether), 0 (Overworld), 1 (End). Empty = no exclusions. Unknown integer IDs are allowed and have no effect until that dimension exists. Excludes cleanup and natural-expiration protection.
+simpleitemcleaner.config.messages.warningsEnabled=Send warnings
+simpleitemcleaner.config.messages.warningsEnabled.tooltip=messages.warningsEnabled: Broadcast countdown messages to players.
+simpleitemcleaner.config.messages.warningSeconds=Warning times
+simpleitemcleaner.config.messages.warningSeconds.tooltip=messages.warningSeconds: List of integer seconds remaining. An empty list disables countdown warnings. Values <=0 or >=interval are ignored; duplicates are sent once.
+simpleitemcleaner.config.messages.warningMessage=Warning text
+simpleitemcleaner.config.messages.warningMessage.tooltip=messages.warningMessage: Up to 1024 characters. {time} becomes e.g. 30s. Empty text is allowed; use warningsEnabled=false to suppress broadcasting. Unknown placeholders remain literal.
+simpleitemcleaner.config.messages.warningColor=Warning color
+simpleitemcleaner.config.messages.warningColor.tooltip=messages.warningColor: Minecraft text color. Default RED.
+simpleitemcleaner.config.messages.resultsEnabled=Send results
+simpleitemcleaner.config.messages.resultsEnabled.tooltip=messages.resultsEnabled: Broadcast the result even when zero units/entities were removed. Administrative command feedback remains available.
+simpleitemcleaner.config.messages.resultMessage=Result text
+simpleitemcleaner.config.messages.resultMessage.tooltip=messages.resultMessage: Up to 1024 characters. {count}=stack units; {entities}=removed entities; {duration}=milliseconds with three decimal places and a comma separator. Empty text is allowed and unknown placeholders remain literal.
+simpleitemcleaner.config.messages.resultColor=Result color
+simpleitemcleaner.config.messages.resultColor.tooltip=messages.resultColor: Minecraft text color. Default GREEN.
+simpleitemcleaner.config.policies.vanilla=VANILLA rules
+simpleitemcleaner.config.policies.vanilla.tooltip=policies.vanilla: Use namespace:item, namespace:item@metadata or @*. Registered items only. Empty is valid. Excludes cleanup and preserves natural expiration.
+simpleitemcleaner.config.policies.permanent=PERMANENT rules
+simpleitemcleaner.config.policies.permanent.tooltip=policies.permanent: Same item syntax as VANILLA. Prevents cleanup and extends natural expiration while enabled. WARNING: entity accumulation increases memory use and can reduce TPS. Does not provide invulnerability or an unlimited lifetime.
+simpleitemcleaner.config.general.logStatistics=Log statistics
+simpleitemcleaner.config.general.logStatistics.tooltip=general.logStatistics: Log units, entities and cleanup duration, plus lifecycle session counters. Does not suppress error/conflict diagnostics.
+
+simpleitemcleaner.gui.undo=Undo
+simpleitemcleaner.gui.defaults=Defaults

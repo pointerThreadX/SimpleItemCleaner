@@ -1,0 +1,142 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.0.197'
+    }
+    // ForgeGradle's published POM requests 1.0.+; pin the resolved official release.
+    configurations.classpath.resolutionStrategy.force 'net.minecraftforge:artifactural:1.0.13'
+}
+
+// Isolate compilation and distribution output. ForgeGradle 3 still uses a fixed build/reobfJar scratch path.
+buildDir = file('build/simpleitemcleaner')
+apply plugin: 'net.minecraftforge.gradle'
+
+if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
+    throw new GradleException('Run this project with JDK 8. See scripts/gradle-jdk8.ps1.')
+}
+
+version = project.mod_version
+group = 'com.creator01'
+archivesBaseName = 'simpleitemcleaner'
+sourceCompatibility = targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20171003-1.12'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+        }
+        server {
+            workingDirectory project.file('run-server')
+            property 'forge.logging.console.level', 'info'
+            args 'nogui'
+        }
+    }
+}
+
+// Forge 1.12 discovery requires resources alongside classes for development runs.
+sourceSets.each {
+    def mergedOutput = layout.buildDirectory.file("sourcesSets/${it.name}").get().asFile
+    it.output.resourcesDir = mergedOutput
+    it.java.outputDir = mergedOutput
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2864'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('mcmod.info') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'SimpleItemCleaner',
+                   'Implementation-Version': project.version,
+                   'Implementation-Vendor': 'creator01'
+    }
+    from('LICENSE')
+    finalizedBy 'reobfJar'
+}
+
+// No test library: this executable suite tests the lifecycle state machine.
+task lifecycleTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.lifecycle.LifecycleStateTest'
+    enableAssertions = true
+}
+task lifecycleNbtTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.lifecycle.LifecycleNbtTest'
+    enableAssertions = true
+}
+task entityItemAccessTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.lifecycle.EntityItemAccessTest'
+    enableAssertions = true
+}
+test.dependsOn lifecycleTest, lifecycleNbtTest, entityItemAccessTest
+
+task functionalTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.cleanup.FunctionalTest'
+    enableAssertions = true
+}
+test.dependsOn functionalTest
+
+task cleanupResultTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.cleanup.CleanupResultTest'
+    enableAssertions = true
+}
+test.dependsOn cleanupResultTest
+
+task configEditorTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.config.ConfigEditorTest'
+    enableAssertions = true
+}
+test.dependsOn configEditorTest
+
+task guiQualityTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.client.GuiQualityTest'
+    enableAssertions = true
+}
+test.dependsOn guiQualityTest
+
+task firstInstallationTest(type: JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'com.creator01.simpleitemcleaner.config.FirstInstallationTest'
+    enableAssertions = true
+}
+test.dependsOn firstInstallationTest
+
