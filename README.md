@@ -4,6 +4,8 @@ A lightweight dropped-item cleaner for **Minecraft 1.12.2**, built against **For
 
 SimpleItemCleaner periodically removes eligible dropped items, protects recent drops and lets you choose how specific items are handled. It works in singleplayer through the integrated server and on dedicated servers.
 
+**AI Disclosure:** This mod's code was primarily generated using OpenAI Codex, based on human-defined requirements and validated through automated and in-game testing.
+
 ## Features
 
 - Scheduled cleanup of dropped items in loaded chunks and dimensions.
